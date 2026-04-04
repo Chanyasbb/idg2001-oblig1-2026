@@ -1,0 +1,19 @@
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database — SQLite (built-in) for dev; swap to psycopg2-binary for PostgreSQL on Render
+# psycopg2-binary
+
+# HTTP client used for calling Assignment 2 microservices (cache, logger, etc.)
+httpx
+
+# XML response support
+lxml
+
+# Testing
+pytest
+pytest-cov
+flake8
+mypy
+python-dotenv
