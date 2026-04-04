@@ -1,0 +1,18 @@
+.claude
+.DS_Store
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.mypy_cache/
+.pytest_cache/
+
+# Database
+*.db
+
+# Env files — .env.example is safe to commit, the rest are not
+.env
+.env.dev
+.env.prod
