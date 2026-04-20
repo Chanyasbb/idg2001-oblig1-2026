@@ -1,0 +1,61 @@
+# create an account and then get userID
+
+### Create a user
+POST http://localhost:8000/v1/user
+Content-Type: application/json
+
+{
+  "email": "test@ntnu.no",
+  "password": "abc123"
+}
+
+# Response looks like:
+# {
+#   "user_id": "a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e",  ← copy this
+#   "email": "test@ntnu.no",
+#   "tokens": 100
+# }
+
+
+
+### Get all users
+GET http://localhost:8000/v1/user
+
+
+
+### Get athlete by row ID (costs 1 token)
+GET http://localhost:8000/v1/athlete/1
+X-User-Id: a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+### Search athlete by name (costs 1 token)
+GET http://localhost:8000/v1/athlete?name=Michael+Phelps
+X-User-Id: a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+### Country medal summary — NOR (costs 1 token)
+GET http://localhost:8000/v1/country/NOR
+X-User-Id: a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+### Sport with filters (costs 1 token)
+GET http://localhost:8000/v1/sport/rowing?country=NOR&year=2000&medals=gold
+X-User-Id: a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+### Same but XML format
+GET http://localhost:8000/v1/sport/rowing?country=NOR&format=xml
+X-User-Id: a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+
+ #check token balance 
+
+### Check your user (tokens should have decreased)
+GET http://localhost:8000/v1/user/a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e
+
+
+
+### Add tokens
+POST http://localhost:8000/v1/tokens
+Content-Type: application/json
+
+{
+  "user_id": "a3f2c1d4-7b8e-4c2a-9f1d-3e5b6a7c8d9e",
+  "amount": 50
+}

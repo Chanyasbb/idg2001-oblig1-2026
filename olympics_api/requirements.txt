@@ -1,19 +1,20 @@
 fastapi
 uvicorn[standard]
 python-multipart
+python-dotenv
 
-# Database — SQLite (built-in) for dev; swap to psycopg2-binary for PostgreSQL on Render
-# psycopg2-binary
+# Password hashing
+bcrypt
 
-# HTTP client used for calling Assignment 2 microservices (cache, logger, etc.)
+# HTTP client — used for Assignment 2 microservice calls
 httpx
 
 # XML response support
 lxml
 
-# Testing
+# Testing & static analysis
 pytest
 pytest-cov
+httpx          # also required by FastAPI TestClient
 flake8
 mypy
-python-dotenv

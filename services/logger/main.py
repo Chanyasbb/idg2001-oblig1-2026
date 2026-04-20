@@ -52,16 +52,23 @@ def _flush_buffer() -> None:
 
 
 def _delete_old_logs() -> None:
-    """Remove log files older than retention_days."""
+    """Remove log files older than retention_days.
+
+    Expects filenames in the form log_YYYY-MM-DD.csv (as produced by _get_log_path).
+    """
     if not os.path.exists(LOG_DIR):
         return
     cutoff = datetime.now() - timedelta(days=_retention_days)
     for filename in os.listdir(LOG_DIR):
-        if not filename.startswith("log_"):
+        if not filename.startswith("log_") or not filename.endswith(".csv"):
             continue
-        # TODO: parse date from filename and delete if older than cutoff
-        # date_str = filename[4:14]  → "YYYY-MM-DD"
-        pass
+        date_str = filename[4:14]  # "log_YYYY-MM-DD.csv" → "YYYY-MM-DD"
+        try:
+            file_date = datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            continue
+        if file_date < cutoff:
+            os.remove(os.path.join(LOG_DIR, filename))
 
 
 @app.post("/log")

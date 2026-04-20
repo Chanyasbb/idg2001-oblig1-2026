@@ -1,14 +1,12 @@
 # docker-compose.yml — Assignment 2: full multi-service stack
 # Run with: docker compose up --build
 #
-# For Assignment 1 only (local dev), just run uvicorn directly:
+# Assignment 1 only (no services):
 #   cd olympics_api && uvicorn app.main:app --reload
-
-version: "3.9"
 
 services:
 
-  # ── Main API (Assignment 1 core) ────────────────────────────────────────────
+  # ── Main API ─────────────────────────────────────────────────────────────────
   main_api:
     build: ./olympics_api
     ports:
@@ -20,21 +18,21 @@ services:
       - RATE_LIMITER_URL=http://rate_limiter:8003
       - TOKEN_SHOP_URL=http://token_shop:8004
     volumes:
-      - olympic_data:/app/data   # mounts the CSV dataset
+      # Bind-mount the data folder so the CSV is accessible without rebuilding
+      - ./olympics_api/data:/app/data
     depends_on:
       - cache
       - logger
       - rate_limiter
       - token_shop
 
-  # ── Cache ────────────────────────────────────────────────────────────────────
+  # ── Cache — in-memory GET response cache (1-minute TTL) ──────────────────────
   cache:
     build: ./services/cache
     ports:
       - "8001:8000"
-    # No volumes needed — cache is in-memory only
 
-  # ── Logger ───────────────────────────────────────────────────────────────────
+  # ── Logger — buffers requests to date-rotated CSV files ──────────────────────
   logger:
     build: ./services/logger
     ports:
@@ -42,27 +40,25 @@ services:
     environment:
       - LOG_DIR=/logs
     volumes:
-      - log_data:/logs            # persist logs across restarts
+      - log_data:/logs
 
-  # ── Rate Limiter ─────────────────────────────────────────────────────────────
+  # ── Rate Limiter — sliding-window delay per user (resets on restart) ─────────
   rate_limiter:
     build: ./services/rate_limiter
     ports:
       - "8003:8000"
-    # In-memory only — resets on restart (acceptable for this assignment)
 
-  # ── Token Shop ───────────────────────────────────────────────────────────────
+  # ── Token Shop — one-time purchase codes, prevents double-spending ────────────
   token_shop:
     build: ./services/token_shop
     ports:
       - "8004:8000"
-    # TODO: persist codes to a file/volume if you want them to survive restarts
 
-  # ── Versioning Proxy ─────────────────────────────────────────────────────────
+  # ── Versioning Proxy — public entry point, routes to the correct API version ──
   versioning:
     build: ./services/versioning
     ports:
-      - "80:8000"                 # public-facing entry point
+      - "80:8000"
     environment:
       - CACHE_URL=http://cache:8001
       - MAIN_API_URL=http://main_api:8000
@@ -71,5 +67,4 @@ services:
       - cache
 
 volumes:
-  olympic_data:   # shared CSV dataset
-  log_data:       # persisted log files
+  log_data:   # persisted log files across container restarts

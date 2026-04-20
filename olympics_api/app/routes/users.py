@@ -37,8 +37,9 @@ def get_user(user_id: str):
 
 
 @router.put("/user/{user_id}", response_model=UserResponse)
+@router.patch("/user/{user_id}", response_model=UserResponse)
 def update_user(user_id: str, body: UserUpdate):
-    """PUT /v1/user/<user_id> — update email and/or password."""
+    """PUT|PATCH /v1/user/<user_id> — update email and/or password."""
     if not queries.get_user(user_id):
         raise HTTPException(status_code=404, detail="User not found")
 

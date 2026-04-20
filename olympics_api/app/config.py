@@ -1,25 +1,27 @@
 """App-wide configuration — reads from environment variables.
 
-Load env before starting:
-    Dev:  uvicorn app.main:app --reload  (with --env-file=../.env.dev)
-    Prod: uvicorn app.main:app           (with --env-file=../.env.prod)
-
-Or use python-dotenv to load automatically (see below).
+Env files live at the project root (one level above olympics_api/).
+python-dotenv resolves the path relative to this file, not the CWD,
+so this works regardless of where uvicorn is launched from.
 """
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Load .env.dev by default; override with ENV=prod to load .env.prod
+# Project root is three levels up from this file:
+# config.py → app/ → olympics_api/ → idg2001-oblig1/
+_root = Path(__file__).resolve().parent.parent.parent
 _env = os.getenv("ENV", "dev")
-load_dotenv(dotenv_path=f"../.env.{_env}")
+# override=False: Docker env vars (set via docker-compose) take precedence
+load_dotenv(dotenv_path=_root / f".env.{_env}", override=False)
 
 # --- Database ---
 # Using SQLite for local dev. For Render, switch to PostgreSQL and set DATABASE_URL.
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./olympics.db")
 
 # Path to the Olympics CSV dataset (loaded into DB on startup)
-DATA_CSV_PATH = os.getenv("DATA_CSV_PATH", "data/olympic.csv")
+DATA_CSV_PATH = os.getenv("DATA_CSV_PATH", "data/athlete_events.csv")
 
 # --- Token system ---
 DEFAULT_TOKEN_AMOUNT = int(os.getenv("DEFAULT_TOKENS", "100"))  # tokens given on signup
