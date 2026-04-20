@@ -12,6 +12,13 @@ __pycache__/
 # Database
 *.db
 
+# Dataset — too large for git (40MB). Download from Kaggle separately.
+olympics_api/data/*.csv
+
+# Test artifacts
+.coverage
+htmlcov/
+
 # Env files — .env.example is safe to commit, the rest are not
 .env
 .env.dev
