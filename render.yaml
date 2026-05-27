@@ -9,3 +9,5 @@ services:
     envVars:
       - key: ENV
         value: prod
+      - key: DATABASE_URL
+        value: sqlite:////tmp/olympics.db
