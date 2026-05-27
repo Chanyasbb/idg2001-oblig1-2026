@@ -5,6 +5,7 @@ services:
     dockerfilePath: ./olympics_api/Dockerfile
     dockerContext: ./olympics_api
     plan: free
+    healthCheckPath: /
     envVars:
       - key: ENV
         value: prod
