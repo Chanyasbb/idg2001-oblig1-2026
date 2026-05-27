@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: olympics-api
+    runtime: docker
+    dockerfilePath: ./olympics_api/Dockerfile
+    dockerContext: ./olympics_api
+    plan: free
+    envVars:
+      - key: ENV
+        value: prod
