@@ -12,8 +12,8 @@ __pycache__/
 # Database
 *.db
 
-# Dataset — too large for git (40MB). Download from Kaggle separately.
-olympics_api/data/*.csv
+# Dataset (trimmed to 2008+ for Render — see README for full dataset info)
+# olympics_api/data/*.csv
 
 # Test artifacts
 .coverage

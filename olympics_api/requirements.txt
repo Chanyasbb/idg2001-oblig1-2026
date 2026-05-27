@@ -2,19 +2,10 @@ fastapi
 uvicorn[standard]
 python-multipart
 python-dotenv
-
-# Password hashing
 bcrypt
-
-# HTTP client — used for Assignment 2 microservice calls
 httpx
-
-# XML response support
 lxml
-
-# Testing & static analysis
 pytest
 pytest-cov
-httpx          # also required by FastAPI TestClient
 flake8
 mypy

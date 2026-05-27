@@ -6,7 +6,7 @@ Run with: pytest tests/test_api.py
 import pytest
 
 
-# ── health ────────────────────────────────────────────────────────────────────
+# health 
 
 def test_root_returns_ok(client):
     resp = client.get("/")
@@ -14,7 +14,7 @@ def test_root_returns_ok(client):
     assert "Olympics API" in resp.json()["message"]
 
 
-# ── user CRUD ─────────────────────────────────────────────────────────────────
+# user CRUD 
 
 def test_create_user(client):
     """POST /v1/user returns 201 with the new user's data."""
@@ -63,7 +63,7 @@ def test_delete_user(client):
     assert client.get(f"/v1/user/{uid}").status_code == 404
 
 
-# ── token management ──────────────────────────────────────────────────────────
+# token management 
 
 def test_add_tokens_increases_balance(client):
     """POST /v1/tokens adds the specified amount to the user's balance."""
@@ -86,13 +86,7 @@ def test_tokens_deducted_on_data_endpoint(client):
     assert updated["tokens"] == initial - 1
 
 
-def test_get_token_price(client):
-    resp = client.get("/v1/tokens")
-    assert resp.status_code == 200
-    assert "tokens_per_money" in resp.json()
-
-
-# ── auth guards ───────────────────────────────────────────────────────────────
+# auth guards 
 
 def test_missing_auth_header_returns_401(client):
     """Data endpoints require X-User-Id — missing header returns 401."""

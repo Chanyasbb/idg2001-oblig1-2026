@@ -4,8 +4,6 @@ from typing import Optional
 from app.database.connections import get_connection
 
 
-# ── helpers ───────────────────────────────────────────────────────────────────
-
 def _sport_name(slug: str) -> str:
     """Normalize a URL slug to a sport name for DB matching.
 
@@ -13,8 +11,6 @@ def _sport_name(slug: str) -> str:
     """
     return slug.replace("-", " ").lower()
 
-
-# ── olympic data queries ──────────────────────────────────────────────────────
 
 def get_athlete(athlete_id: int) -> Optional[dict]:
     """Fetch the olympics row with the given auto-increment ID."""
@@ -91,8 +87,6 @@ def insert_event(data: dict) -> None:
     conn.commit()
     conn.close()
 
-
-# ── user queries ──────────────────────────────────────────────────────────────
 
 def get_user(user_id: str) -> Optional[dict]:
     """Fetch a user by user_id."""

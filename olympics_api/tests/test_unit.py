@@ -6,7 +6,7 @@ from app.utils.auth import hash_password, verify_password, generate_user_id
 from app.utils.token_cost import COST_DEFAULT, COST_ATHLETE, COST_COUNTRY, COST_SPORT_QUERY
 
 
-# ── auth helpers ──────────────────────────────────────────────────────────────
+# auth helpers 
 
 def test_generate_user_id_is_valid_uuid():
     """generate_user_id must return a valid UUID4 string."""
@@ -47,7 +47,7 @@ def test_same_password_different_hashes():
     assert hash_password("abc") != hash_password("abc")
 
 
-# ── token costs ───────────────────────────────────────────────────────────────
+#  token costs 
 
 @pytest.mark.parametrize("cost", [COST_DEFAULT, COST_ATHLETE, COST_COUNTRY, COST_SPORT_QUERY])
 def test_token_costs_are_positive(cost):

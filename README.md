@@ -1,20 +1,20 @@
 # Olympics API
 
-REST API for querying 120 years of Olympic history data.
+REST API for querying Olympic Games data (2008–2016).
 Built with FastAPI + SQLite. Token-based access control.
+
+## Live on Render
+
+**Base URL:** `<RENDER_URL>`
+
+Interactive docs: `<RENDER_URL>/docs`
 
 ## Dataset
 
-Place `athlete_events.csv` from [Kaggle](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results) at:
+The bundled dataset covers 2008–2016 (Summer + Winter Olympics, ~49k rows).
+Original full dataset (120 years) available on [Kaggle](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results).
 
-```
-olympics_api/data/athlete_events.csv
-```
-
-271,116 rows. Columns: `ID, Name, Sex, Age, Height, Weight, Team, NOC, Games, Year, Season, City, Sport, Event, Medal`.
-The API seeds this into SQLite on first startup.
-
-## Run locally (Assignment 1)
+## Run locally
 
 ```bash
 cd olympics_api
@@ -25,14 +25,6 @@ uvicorn app.main:app --reload
 
 - API: http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
-
-## Run with Docker Compose (Assignment 2)
-
-```bash
-docker compose up --build
-```
-
-The versioning proxy is the public entry point on port 80.
 
 ## Endpoints
 
@@ -45,9 +37,7 @@ The versioning proxy is the public entry point on port 80.
 | GET | `/v1/user/<id>` | Get a user |
 | PUT / PATCH | `/v1/user/<id>` | Update email and/or password |
 | DELETE | `/v1/user/<id>` | Delete a user |
-| GET | `/v1/tokens` | Get token exchange rate |
 | POST | `/v1/tokens` | Add tokens to a user |
-| POST | `/v1/tokens/redeem` | Redeem a token shop code |
 
 ### Data (requires `X-User-Id` header, costs 1 token per call)
 
