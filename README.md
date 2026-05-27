@@ -1,13 +1,17 @@
 # Olympics API
 
+This is for idg2001 - oblig 1 ( i used the same repo for oblig 2 so i had to create a seperate one here on github instead for render)
+
+https://github.com/Chanyasbb/idg2001-oblig1-2026 
+
 REST API for querying Olympic Games data (2008–2016).
 Built with FastAPI + SQLite. Token-based access control.
 
 ## Live on Render
 
-**Base URL:** `<RENDER_URL>`
+**Base URL:** `https://olympics-api-b5jv.onrender.com`
 
-Interactive docs: `<RENDER_URL>/docs`
+Interactive docs: `https://olympics-api-b5jv.onrender.com/docs`
 
 ## Dataset
 
